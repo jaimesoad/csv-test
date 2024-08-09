@@ -1,0 +1,31 @@
+version: "2"
+sql:
+  - engine: "sqlite"
+    queries: "sql/query.sql"
+    schema: "sql/schema.sql"
+    gen:
+      go:
+        package: "sqlc"
+        out: "pkg/sqlc"
+        overrides:
+        - db_type: "DATETIME"
+          go_type:
+            import: "sqlc/pkg/utils"
+            type: "Time"
+
+        - column: "Users.username"
+          go_struct_tag: csv:"Username"
+        - column: "Users.identifier"
+          go_struct_tag: csv:" Identifier"
+        - column: "Users.one_time_password"
+          go_struct_tag: csv:"One-time password"
+        - column: "Users.recovery_code"
+          go_struct_tag: csv:"Recovery code"
+        - column: "Users.first_name"
+          go_struct_tag: csv:"First name"
+        - column: "Users.last_name"
+          go_struct_tag: csv:"Last name"
+        - column: "Users.department"
+          go_struct_tag: csv:"Department"
+        - column: "Users.location"
+          go_struct_tag: csv:"Location"
